@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+    
+{% block conteudo %}
+    <h2>Deletar mensagem</h2>
+    Você tem certeza que deseja excluir a mensagem de id {{mensagem.id}}?
+    <form method='post' action="{{url_for('delete', id=mensagem.id)}}">
+        <input type="submit" value="Sim">
+    </form>
+    <a href="{{url_for('recovery')}}">Cancelar</a>
+{% endblock %}

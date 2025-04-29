@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+    
+{% block conteudo %}
+    <ul>
+    {% for mensagem in mensagems %}
+        <li class="d-flex flex-column">
+            {{mensagem.conteudo}}
+            <div>
+                <a class="btn btn-outline-primary" href="{{url_for('update', id=mensagem.id)}}">Atualizar</a>
+                <a class="btn btn-outline-primary" href="{{url_for('delete', id=mensagem.id)}}">Deletar</a>
+            </div>
+        </li>
+    {% endfor %}
+    </ul>
+{% endblock %}
