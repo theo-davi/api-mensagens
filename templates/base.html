@@ -9,8 +9,11 @@
 </head>
 <body>
     <a href="{{url_for('index')}}" class="btn btn-outline-primary"> Página Incial</a> |
-    <a href="{{url_for('create')}}" class="btn btn-outline-primary"> Cadastrar mensagens </a> |
-    <a href="{{url_for('recovery')}}" class="btn btn-outline-primary"> Listar mensagens </a> |
+    <a href="{{url_for('login')}}" class="btn btn-outline-primary"> Login </a> |
+    <a href="{{url_for('usuarios.create')}}" class="btn btn-outline-primary"> Cadastrar Usuarios </a> |
+    <a href="{{url_for('usuarios.recovery')}}" class="btn btn-outline-primary"> Listar Usuarios </a> |
+    <a href="{{url_for('pizzas.create')}}" class="btn btn-outline-primary"> Cadastrar Pizzas </a> |
+    <a href="{{url_for('pizzas.recovery')}}" class="btn btn-outline-primary"> Listar Pizzas </a> |
 
     {% set mensagens = get_flashed_messages(with_categories=true) %}
     {% if mensagens %}

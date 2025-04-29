@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+    
+{% block conteudo %}
+<h2>Deletar pizza</h2>
+    Você tem certeza que deseja excluir a pizza de sabor {{pizza.sabor}}?
+    <form method='post' action="{{url_for('pizzas.delete', id=pizza.id)}}">
+        <input type="submit" value="Sim">
+    </form>
+    <a href="{{url_for('pizzas.recovery')}}">Cancelar</a>
+{% endblock %}

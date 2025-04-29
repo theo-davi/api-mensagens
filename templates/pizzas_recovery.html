@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block conteudo %}
+    <ul>
+    {% for pizza in pizzas %}
+        <li class="d-flex flex-column">
+            {{pizza.sabor}} - {{pizza.imagem}} - {{pizza.ingredientes}} - {{pizza.preco}}
+            <div>
+                <a class="btn btn-outline-primary" href="{{url_for('pizzas.update', id=pizza.id)}}">Atualizar</a>
+                <a class="btn btn-outline-primary" href="{{url_for('pizzas.delete', id=pizza.id)}}">Deletar</a>
+            </div>
+        </li>
+    {% endfor %}
+    </ul>
+{% endblock %}
