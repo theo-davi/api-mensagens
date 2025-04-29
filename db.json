@@ -2,22 +2,10 @@
   "mensagens": [
     {
       "id": "2",
-      "conteudo": "mensagem dois"
+      "conteudo": "Texto da mensagem"
     },
     {
-      "id": "fbca",
-      "conteudo": "Texto da nova mensagem."
-    },
-    {
-      "id": "baed",
-      "conteudo": "Texto da nova mensagem."
-    },
-    {
-      "id": "7dc6",
-      "conteudo": "Texto da nova mensagem."
-    },
-    {
-      "id": "d25b",
+      "id": "6b98",
       "conteudo": "Texto da nova mensagem."
     }
   ]
