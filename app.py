@@ -42,8 +42,9 @@ def read_one(id):
 
 @app.route('/mensagens', methods=['POST'])
 def create():
-    dados['mensagens'].append({"id":"5", "conteudo":"texto da nova mensagem"})
-    return dados
+    db.session.add(Mensagem('nova mensagem'))
+    db.session.commit()
+    return redirect('mensagens')
 
 @app.route('/mensagens/<id>', methods=['PUT'])
 def update(id):
