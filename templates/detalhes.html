@@ -1,9 +1,0 @@
-{% extends 'base.html' %}
-
-{% block conteudo %}
-<ul>
-    <li> Id: {{mensagem.id}} </li>
-    <li> Conteúdo: {{mensagem.conteudo}} </li>
-</ul>
-<a class="btn btn-primary" href="{{url_for('mensagens.recovery')}}">Voltar para Mensagens</a>
-{% endblock %}
