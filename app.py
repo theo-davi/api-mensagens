@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, flash, url_for, jsonify
+from flask import Flask, redirect
 import json
 from flask_migrate import Migrate
 from utils import db
@@ -14,12 +14,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
 migrate = Migrate(app, db)
 
-arquivo=open('db.json')
-dados=json.load(arquivo)
-lista_mensagens=dados['mensagens']
-
-'''dados['mensagens'] é uma lista de mensagens'''
-'''mensagem é um dicionário'''
+arquivo=open('db.json', 'w')
 
 @app.route('/')
 def index():
@@ -27,10 +22,7 @@ def index():
 
 @app.route('/mensagens')
 def read_all():
-    mensagens=Mensagem.query.all()
-    for mensagem in mensagens:
-        lista_mensagens.append({"id":mensagem.id, "conteudo":mensagem.conteudo})
-    return dados
+    return json.load(open('db.json'))
 
 @app.route('/mensagens/<id>')
 def read_one(id):
@@ -44,6 +36,7 @@ def read_one(id):
 def create():
     db.session.add(Mensagem('nova mensagem'))
     db.session.commit()
+    arquivo.write(json.dumps({"id":"mensagem.id", "conteudo":"mensagem.conteudo"}))
     return redirect('mensagens')
 
 @app.route('/mensagens/<id>', methods=['PUT'])
