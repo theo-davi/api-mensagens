@@ -19,8 +19,6 @@ def create():
     }
     mensagens.append(mensagem)
     auto_id+=1
-    arquivo=open('db.json', 'w')
-    arquivo.write(json.dumps({"mensagens":mensagens}))
     return jsonify({"mensagens":mensagens})
 
 @app.route('/mensagens')
@@ -39,8 +37,6 @@ def update(id):
     for mensagem in mensagens:
         if mensagem['id']==id:
             mensagem['conteudo']=request.get_json().get('conteudo')
-            arquivo=open('db.json', 'w')
-            arquivo.write(json.dumps({"mensagens":mensagens}))
             return mensagem
 
 @app.route('/mensagens/<int:id>', methods=['DELETE'])
@@ -48,6 +44,4 @@ def delete(id):
     for mensagem in mensagens:
         if mensagem['id']==id:
             mensagens.remove(mensagem)
-            arquivo=open('db.json', 'w')
-            arquivo.write(json.dumps({"mensagens":mensagens}))
             return jsonify({"mensagens":mensagens})
