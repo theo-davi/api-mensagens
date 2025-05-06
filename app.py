@@ -1,6 +1,28 @@
 from flask import Flask, request, jsonify
+from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 
 app = Flask(__name__)
+
+app.config['SECRET_KEY'] = 'teste'
+
+app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///project.db"
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+db = SQLAlchemy()
+db.init_app(app)
+migrate = Migrate(app, db)
+
+class Mensagem(db.Model):
+    __tablename__="mensagem"
+    id = db.Column(db.Integer, primary_key = True)
+    conteudo = db.Column(db.String(280))
+
+    def __init__(self, conteudo):
+        self.conteudo = conteudo
+    
+    def __repr__(self):
+        return "<Mensagem {}>".format(self.conteudo)
 
 @app.route('/')
 def index():
@@ -18,6 +40,8 @@ def create():
     }
     mensagens.append(mensagem)
     auto_id+=1
+    db.session.add(Mensagem(request.get_json().get("conteudo")))
+    db.session.commit()
     return jsonify({"mensagens":mensagens})
 
 @app.route('/mensagens')
