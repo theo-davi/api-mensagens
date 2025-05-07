@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, redirect
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 
@@ -28,24 +28,22 @@ class Mensagem(db.Model):
 def index():
     return "<a href='/mensagens'>/mensagens</a>"
 
-mensagens=[]
-auto_id=1
-
 @app.route('/mensagens', methods=['POST'])
 def create():
-    global auto_id
-    mensagem={
-        "id":auto_id,
-        "conteudo":request.get_json().get("conteudo")
-    }
-    mensagens.append(mensagem)
-    auto_id+=1
     db.session.add(Mensagem(request.get_json().get("conteudo")))
     db.session.commit()
-    return jsonify({"mensagens":mensagens})
+    return redirect('mensagens')
 
 @app.route('/mensagens')
 def read_all():
+    global mensagens
+    mensagens=[]
+    mensagens_bd=Mensagem.query.all()
+    for mensagem_bd in mensagens_bd:
+        mensagens.append({
+            "id":mensagem_bd.id,
+            "conteudo":mensagem_bd.conteudo
+        })
     return jsonify({"mensagens":mensagens})
 
 @app.route('/mensagens/<int:id>')
@@ -59,12 +57,16 @@ def read_one(id):
 def update(id):
     for mensagem in mensagens:
         if mensagem['id']==id:
+            mensagem_bd=Mensagem.query.get(id)
+            mensagem_bd.conteudo=request.get_json().get('conteudo')
+            db.session.add(mensagem_bd)
+            db.session.commit()
             mensagem['conteudo']=request.get_json().get('conteudo')
             return mensagem
+    return 'Mensagem não encontrada.'
 
 @app.route('/mensagens/<int:id>', methods=['DELETE'])
 def delete(id):
-    for mensagem in mensagens:
-        if mensagem['id']==id:
-            mensagens.remove(mensagem)
-            return jsonify({"mensagens":mensagens})
+    db.session.delete(Mensagem.query.get(id))
+    db.session.commit()
+    return redirect('mensagens')
