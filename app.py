@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, redirect
+from flask import Flask, request, jsonify, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 
@@ -28,12 +28,6 @@ class Mensagem(db.Model):
 def index():
     return "<a href='/mensagens'>/mensagens</a>"
 
-@app.route('/mensagens', methods=['POST'])
-def create():
-    db.session.add(Mensagem(request.get_json().get("conteudo")))
-    db.session.commit()
-    return redirect('mensagens')
-
 @app.route('/mensagens')
 def read_all():
     global mensagens
@@ -45,6 +39,12 @@ def read_all():
             "conteudo":mensagem_bd.conteudo
         })
     return jsonify({"mensagens":mensagens})
+
+@app.route('/mensagens', methods=['POST'])
+def create():
+    db.session.add(Mensagem(request.get_json().get("conteudo")))
+    db.session.commit()
+    return redirect(url_for('read_all'))
 
 @app.route('/mensagens/<int:id>')
 def read_one(id):
@@ -62,11 +62,10 @@ def update(id):
             db.session.add(mensagem_bd)
             db.session.commit()
             mensagem['conteudo']=request.get_json().get('conteudo')
-            return mensagem
-    return 'Mensagem não encontrada.'
+            return redirect(url_for('read_one', id=id))
 
 @app.route('/mensagens/<int:id>', methods=['DELETE'])
 def delete(id):
     db.session.delete(Mensagem.query.get(id))
     db.session.commit()
-    return redirect('mensagens')
+    return redirect(url_for('read_all'))
