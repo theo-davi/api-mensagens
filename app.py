@@ -66,6 +66,10 @@ def update(id):
 
 @app.route('/mensagens/<int:id>', methods=['DELETE'])
 def delete(id):
-    db.session.delete(Mensagem.query.get(id))
-    db.session.commit()
-    return redirect(url_for('read_all'))
+    try:
+        db.session.delete(Mensagem.query.get(id))
+        db.session.commit()
+        return redirect(url_for('read_all'))
+    except Exception:
+        return 'Mensagem não encontrada'
+        
