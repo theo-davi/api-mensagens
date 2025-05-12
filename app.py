@@ -48,21 +48,27 @@ def create():
 
 @app.route('/mensagens/<int:id>')
 def read_one(id):
-    for mensagem in mensagens:
-        if mensagem['id']==id:
-            return mensagem
-    return 'Mensagem não encontrada.'
+    try:
+        for mensagem in mensagens:
+            if mensagem['id']==id:
+                return mensagem
+    except:
+        return jsonify({"mensagem":"Mensagem não encontrada"}), 404
 
 @app.route('/mensagens/<int:id>', methods=['PUT'])
 def update(id):
-    for mensagem in mensagens:
-        if mensagem['id']==id:
-            mensagem_bd=Mensagem.query.get(id)
-            mensagem_bd.conteudo=request.get_json().get('conteudo')
-            db.session.add(mensagem_bd)
-            db.session.commit()
-            mensagem['conteudo']=request.get_json().get('conteudo')
-            return redirect(url_for('read_one', id=id))
+    try:
+        for mensagem in mensagens:
+            if mensagem['id']==id:
+                mensagem_bd=Mensagem.query.get(id)
+                mensagem_bd.conteudo=request.get_json().get('conteudo')
+                db.session.add(mensagem_bd)
+                db.session.commit()
+                mensagem['conteudo']=request.get_json().get('conteudo')
+    except:
+        return jsonify({"mensagem":"Mensagem não encontrada"}), 404
+    else:
+        return redirect(url_for('read_one', id=id))
 
 @app.route('/mensagens/<int:id>', methods=['DELETE'])
 def delete(id):
@@ -70,6 +76,5 @@ def delete(id):
         db.session.delete(Mensagem.query.get(id))
         db.session.commit()
         return redirect(url_for('read_all'))
-    except Exception:
-        return 'Mensagem não encontrada'
-        
+    except:
+        return jsonify({"mensagem":"Mensagem não encontrada"}), 404
