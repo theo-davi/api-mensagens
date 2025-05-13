@@ -24,6 +24,21 @@ class Mensagem(db.Model):
     def __repr__(self):
         return "<Mensagem {}>".format(self.conteudo)
 
+class Comentario(db.Model):
+    __tablename__="comentario"
+    id=db.Column(db.Integer, primary_key=True)
+    conteudo=db.Column(db.String(280))
+    id_mensagem=db.Column(db.Integer, db.ForeignKey('mensagem.id'))
+
+    mensagem=db.relationship('Mensagem', foreign_keys='id_mensagem')
+
+    def __init__(self, conteudo, id_mensagem):
+        self.conteudo = conteudo
+        self.id_mensagem=id_mensagem
+    
+    def __repr__(self):
+        return "<Comentario {} - {}>".format(self.mensagem.conteudo, self.conteudo)
+
 @app.route('/')
 def index():
     return "<a href='/mensagens'>/mensagens</a>"
