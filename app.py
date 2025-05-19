@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, redirect, url_for
+from flask import Flask, request, jsonify, redirect, url_for, abort
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 
@@ -24,6 +24,10 @@ class Mensagem(db.Model):
     def __repr__(self):
         return "<Mensagem {}>".format(self.conteudo)
 
+@app.errorhandler(400)
+def conteudo_vazio(error):
+    return jsonify({"mensagem":"Mensagem vazia."}), 400
+
 @app.route('/')
 def index():
     return "<a href='/mensagens'>/mensagens</a>"
@@ -42,7 +46,11 @@ def read_all():
 
 @app.route('/mensagens', methods=['POST'])
 def create():
-    db.session.add(Mensagem(request.get_json().get("conteudo")))
+    mensagem=request.get_json().get("conteudo")
+    if mensagem=="":
+        abort(400)
+    mensagem_bd=Mensagem(mensagem)
+    db.session.add(mensagem_bd)
     db.session.commit()
     return redirect(url_for('read_all'))
 
@@ -78,3 +86,6 @@ def delete(id):
         return redirect(url_for('read_all'))
     except:
         return jsonify({"mensagem":"Mensagem não encontrada"}), 404
+
+if __name__ == '__main__':
+    app.run()
