@@ -24,7 +24,7 @@ def create():
     mensagem_bd=Mensagem(mensagem)
     db.session.add(mensagem_bd)
     db.session.commit()
-    return redirect(url_for('read_all'))
+    return redirect(url_for('.read_all'))
 
 @bp_mensagens.route('//<int:id>')
 def read_one(id):
@@ -44,7 +44,7 @@ def update(id):
             db.session.add(mensagem_bd)
             db.session.commit()
             mensagem['conteudo']=request.get_json().get('conteudo')
-            return redirect(url_for('read_one', id=id))
+            return redirect(url_for('.read_one', id=id))
     abort(404)
 
 @bp_mensagens.route('//<int:id>', methods=['DELETE'])
@@ -52,6 +52,6 @@ def delete(id):
     try:
         db.session.delete(Mensagem.query.get(id))
         db.session.commit()
-        return redirect(url_for('read_all'))
+        return redirect(url_for('.read_all'))
     except:
         abort(404)
