@@ -16,7 +16,7 @@ from controllers.mensagem import bp_mensagens
 app = Flask(__name__)
 #cria uma instância da classe Flask, ou seja, cria a aplicação web Flask.
 app.register_blueprint(bp_mensagens, url_prefix='/mensagens')
-#registra o blueprint bp_mensagens na aplicação e define um prefixo comum para todas as rotas do bp, começando com /mensagens.
+#registra o blueprint bp_mensagens na aplicação, anexando-o a ela, e define um prefixo comum para todas as rotas do bp, que vão começar com /mensagens.
 
 app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///project.db"
 #define nas configurações da aplicação que o caminho do banco de dados do SQLAlchemy, que é SQLITE, está no mesmo diretório do projeto (diretório raiz), e o arquivo do bd
