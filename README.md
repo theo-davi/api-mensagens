@@ -11,6 +11,11 @@
 ## O que é um ORM? O que é SQLAlchemy?
 ORM é a sigla para Object-Relational Mapping, que significa Mapeamento Objeto-Relacional. No Flask, é responsável por mapear as classes que são modelos para tabelas do banco de dados, identificadas por herdarem da classe Model do Flask SQLAlchemy, o ORM do Flask.
 ## O que é uma migração?
+## URL e URI
+## Decoradores
+### @errorhandler
+Registra (decora) funções para tratar / manipular erros específicos.
+## Método dunder
 # Referências
 https://www.rocketseat.com.br/blog/artigos/post/como-criar-api-com-flask-em-python
 https://balta.io/blog/o-que-e-um-framework#oqueeumframework

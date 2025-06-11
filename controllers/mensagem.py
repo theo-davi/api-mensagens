@@ -2,10 +2,13 @@ from flask import request, jsonify, redirect, url_for, abort, Blueprint
 from models.mensagem import Mensagem
 from utils import db
 
-bp_mensagens = Blueprint("mensagens", __name__, template_folder='templates')
+bp_mensagens = Blueprint("mensagens", __name__)
+#Blueprint é uma classe 
 
 @bp_mensagens.route('/')
+#a função decoradora @route registra, no Blueprint bp_mensagens, a função read_all como manipuladora da URL '/', que, nesse caso, é '/mensagens/'.
 def read_all():
+#define a função read_all (que foi decorada com o decorador route)
     global mensagens
     mensagens=[]
     mensagens_bd=Mensagem.query.all()
