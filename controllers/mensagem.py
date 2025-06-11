@@ -42,7 +42,8 @@ def create():
     mensagem_bd=Mensagem(mensagem)
     db.session.add(mensagem_bd)#adiciona a variável à sessão do banco de dados (adiciona a mensagem nova ao banco de dados)
     db.session.commit()#salva a nova mensagem no banco de dados
-    return jsonify({"mensagem":"Mensagem criada."})
+    return jsonify({"mensagem":"Mensagem criada."})#retorna um dicionário Python convertido em JSON com chave "mensagem" de valor "Mensagem criada.", que é uma resposta à
+# requisição.
 
 @bp_mensagens.route('/<int:id>')
 def read_one(id):
@@ -67,10 +68,9 @@ def update(id):
 
 @bp_mensagens.route('/<int:id>', methods=['DELETE'])
 def delete(id):
-    try:
-        mensagem_bd=Mensagem.query.get(id)
+    mensagem_bd=Mensagem.query.get(id)
+    if mensagem_bd:
         db.session.delete(mensagem_bd)
         db.session.commit()
         return jsonify({"mensagem":"Mensagem deletada."})
-    except:
-        abort(404)
+    abort(404)
