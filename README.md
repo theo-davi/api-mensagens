@@ -20,9 +20,10 @@ Registra (decora) funções para tratar / manipular erros específicos.
 https://www.rocketseat.com.br/blog/artigos/post/como-criar-api-com-flask-em-python
 https://balta.io/blog/o-que-e-um-framework#oqueeumframework
 # Projeto
-## Gerenciar recurso de usuário
+## 1ª atividade
+### Gerenciar recurso de usuário
 (ID, email, nome, senha)
-## Criar relação com mensagem
+### Criar relação com mensagem
 Ao criar:
 - API associa um usuário padrão de ID (1).
 - Não permite alterações de Usuário de Mensagem.
@@ -32,3 +33,10 @@ OBS.:
 - email deve ser único.
 - nome não deve ser vazio.
 - formato de email válido.
+- regras para senhas:
+  - min. de 8 caracteres.
+  - precisa ter:
+    - dígito.
+    - caractere especial (@, #, !, %, *, ?, &)
+    - letra maiúscula.
+    - letra minúscula.
