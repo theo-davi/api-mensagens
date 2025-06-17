@@ -16,6 +16,11 @@ ORM é a sigla para Object-Relational Mapping, que significa Mapeamento Objeto-R
 ### @errorhandler
 Registra (decora) funções para tratar / manipular erros específicos.
 ## Método dunder
+__init__, __repr__
+## list_comprehension
+## RegEx
+## Outros tópiocs
+### f strings
 # Referências
 https://www.rocketseat.com.br/blog/artigos/post/como-criar-api-com-flask-em-python
 https://balta.io/blog/o-que-e-um-framework#oqueeumframework

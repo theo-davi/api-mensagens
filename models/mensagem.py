@@ -9,4 +9,10 @@ class Mensagem(db.Model):
         self.conteudo = conteudo
     
     def __repr__(self):
-        return "<Mensagem {}>".format(self.conteudo)
+        return f"<Mensagem {self.conteudo}>"
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "conteudo": self.conteudo
+        }
