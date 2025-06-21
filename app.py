@@ -1,16 +1,15 @@
 from flask import Flask, jsonify, render_template_string
-from flask_migrate import Migrate
-from utils import db
+from utils import db, migrate
 from controllers.mensagem import bp_mensagens
+from config import Config
 
 app = Flask(__name__)
 app.register_blueprint(bp_mensagens, url_prefix='/mensagens')
 
-app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///project.db"
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config.from_object(Config)
 
 db.init_app(app)
-migrate = Migrate(app, db)
+migrate.init_app(app, db)
 
 @app.errorhandler(400)
 def conteudo_vazio(error):
